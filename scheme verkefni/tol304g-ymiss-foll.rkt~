@@ -1,0 +1,5 @@
+;;; Möguleg föll og lykilorð
+;;;  define, lambda, if, and, or, car, cdr, cons, null?, list, =, *, +.
+(define (f n) (if (< n 2) 1 (* n (f (- n 1)))))
+(define x 123)
+(define f2 (lambda (n) (if (< n 2) 1 (* n (f2 (- n 1))))))

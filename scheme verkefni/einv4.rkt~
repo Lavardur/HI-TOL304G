@@ -1,0 +1,11 @@
+;; Notkun: (sum1 n)
+;; Fyrir: n er heiltala, n>=0
+;; Gildi: Summan 0+1+...+n
+;; Use: (sum1 n)
+;; Pre: n is an integer, n>=0
+;; Value: The sum 0+1+...+n
+
+(define sum1 (n)
+
+  
+)
