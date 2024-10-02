@@ -1,8 +1,11 @@
 ;; Use: (modpow p q r)
 ;; Pre: p,q and r are integers, q >= 0, 0 <= p < r and r > 1
 ;; Value: The remainder when r is divided into p to the power q
-
 (define (modpow p q r)
+  ;; Use: (help n acc total)
+  ;; Pre: n, acc, and total are integers, acc >= 0
+  ;; Value: The remainder when r is divided into n raised to the power of acc,
+  ;;        accumulated with the current total
   (define (help n acc total)
     (if (= acc 0)
         (remainder total r)
