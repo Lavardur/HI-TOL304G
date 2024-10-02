@@ -1,0 +1,12 @@
+(define (realpow-recursive x z)
+  (cond
+    ((= z 0) 1)
+    ((= z 1) x)
+    ((even? z) (let ((half (realpow-recursive x (quotient z 2))))
+                 (* half half)))
+    (else (* x (realpow-recursive x (- z 1))))))
+
+(define test-base (+ 1 1e-10))
+(define test-exponent 10000000000)
+
+(realpow-recursive test-base test-exponent)
