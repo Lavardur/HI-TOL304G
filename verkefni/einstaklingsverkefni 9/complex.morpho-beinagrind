@@ -1,0 +1,129 @@
+{;;;
+
+Design document for "complex.mmod"
+==================================
+
+Exported
+--------
+
+Use:  z = complex(x,y);
+Pre:  x and y are floating point numbers.
+Post: z is the complex number x+yi.
+
+Use:  x = real(z);
+Pre:  z is a complex number.
+Post: x is ???
+
+Use:  x = imag(z);
+Pre:  z is a complex number.
+Post: x is ???
+
+Use:  z = x+++y;
+Pre:  x and y are complex numbers.
+Post: z is ???.
+
+Use:  z = x---y;
+Pre:  x and y are complex numbers.
+Post: z is ???.
+
+Use:  z = x***y;
+Pre:  x and y are complex numbers.
+Post: z is ???.
+
+Use:  z = x///y;
+Pre:  x and y are complex numbers.
+      y is not zero.
+Post: z is ???.
+
+Imported
+--------
+
+Only BASIS function are imported.
+
+;;;}
+
+"complex.mmod" =
+{{
+;;; Data invariant:
+;;;   A complex number z = x+yi, where x and y
+;;;   are double numbers, is represented as ???.
+
++++ =
+	fun(x,y)
+	{
+		???
+	};
+
+--- =
+	fun(x,y)
+	{
+		???
+	};
+
+*** =
+	fun(x,y)
+	{
+		???
+	};
+
+
+/// =
+	fun(x,y)
+	{
+		???
+	};
+
+complex =
+	fun(x,y)
+	{
+		???
+	};
+
+real =
+	fun(z)
+	{
+		???
+	};
+
+imag =
+	fun(z)
+	{
+		???
+	};
+}}
+;
+
+"testcomplex.mexe" = main in
+!
+{{
+main =
+	fun()
+	{
+		writeln("(1+0i)+(0+2i)="++show(complex(1.0,0.0)+++complex(0.0,2.0)));
+		writeln("(1+i)+(3+4i)="++show(complex(1.0,1.0)+++complex(3.0,4.0)));
+		writeln("(1+0i)-(0+i)="++show(complex(1.0,0.0)---complex(0.0,1.0)));
+		writeln("(2+3i)-(4+5i)="++show(complex(2.0,3.0)---complex(4.0,5.0)));
+		writeln("(0+i)*(0+i)="++show(complex(0.0,1.0)***complex(0.0,1.0)));
+		writeln("(1-i)*(1+i)="++show(complex(1.0,-1.0)***complex(1.0,1.0)));
+		writeln("(1+i)*(2+3i)="++show(complex(1.0,1.0)***complex(2.0,3.0)));
+		writeln("(2+0i)/(1+i)="++show(complex(2.0,0.0)///complex(1.0,1.0)));
+		writeln("(-1+0i)/(0+i)="++show(complex(-1.0,0.0)///complex(0.0,1.0)));
+	};
+	
+;;; Use:  s = show(z);
+;;; Pre:  z is a complex number.
+;;; Post: s is a string of format x+y*i
+;;;       where x is the real part of z
+;;;       and y is the imaginary part of
+;;;       z.
+show =
+	fun(z)
+	{
+		real(z)++"+"++imag(z)++"*i"
+	};
+}}
+*
+"complex.mmod"
+*
+BASIS
+;

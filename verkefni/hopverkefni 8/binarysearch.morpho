@@ -1,0 +1,149 @@
+"binarysearch.mexe" = main in {{
+main = fun() {
+	;;; Notkun: k = search1(f,i,j,x);
+	;;; Fyrir:  f er fall sem tekur heiltölu sem viðfang
+	;;;         og skilar gildi af einhverri gerð sem
+	;;;         <, >, <=, >=, !=, == virka fyrir.
+	;;;         i og j eru heiltölur, i <= j.
+	;;;         Fallið f er í vaxandi röð á [i,j), þ.e.
+	;;;         fyrir öll p,q þ.a. i <= p < q < j gildir f(p) <= f(q).
+	;;;         x er gildi af sömu gerð og gildin sem f skilar.
+	;;; Eftir:  i <= k <= j,
+	;;;         fyrir öll gildi p þ.a. i <= p < k gildir f(p) < x, 
+	;;;         fyrir öll gildi p þ.a. k <= p < j gildir f(p) >= x.
+	rec fun search1(f,i,j,x)
+	{
+		var p = i, q = j;
+		while( p != q )
+		{
+			;;; i <= p <= q <= j,
+			;;; fyrir öll r þ.a. i <= r < p gildir f(r) < x,
+			;;; fyrir öll r þ.a. q <= r < j gildir f(r) >= x
+			val m = p+(q-p)/2;
+			if( f(m) < x ) { p = m+1 } else { q = m }
+		};
+		p
+	};
+
+	;;; Notkun: k = search1b(f,i,j,x);
+	;;; Fyrir:  f er fall sem tekur heiltölu sem viðfang
+	;;;         og skilar gildi af einhverri gerð sem
+	;;;         <, >, <=, >=, !=, == virka fyrir.
+	;;;         i og j eru heiltölur, i <= j.
+	;;;         Fallið f er í minnkandi röð á [i,j), þ.e.
+	;;;         fyrir öll p,q þ.a. i <= p < q < j gildir f(p) >= f(q).
+	;;;         x er gildi af sömu gerð og gildin sem f skilar.
+	;;; Eftir:  i <= k <= j,
+	;;;         fyrir öll gildi p þ.a. i <= p < k gildir f(p) > x, 
+	;;;         fyrir öll gildi p þ.a. k <= p < j gildir f(p) <= x.
+	rec fun search1b(f,i,j,x)
+	{
+		var p = i, q = j;
+		while( p != q )
+		{
+			;;; i <= p <= q <= j,
+			;;; fyrir öll r þ.a. i <= r < p gildir f(r) > x,
+			;;; fyrir öll r þ.a. q <= r < j gildir f(r) <= x
+			val m = p+(q-p)/2;
+			if( f(m) > x ) { p = m+1 } else { q = m }
+		};
+		p
+	};
+
+	;;; Notkun: k = search2(f,i,j,x);
+	;;; Fyrir:  f er fall sem tekur heiltölu sem viðfang
+	;;;         og skilar gildi af einhverri gerð sem
+	;;;         <, >, <=, >=, !=, == virka fyrir.
+	;;;         i og j eru heiltölur, i <= j.
+	;;;         Fallið f er í vaxandi röð á [i,j), þ.e.
+	;;;         fyrir öll p,q þ.a. i <= p < q < j gildir f(p) <= f(q).
+	;;;         x er gildi af sömu gerð og gildin sem f skilar.
+	;;; Eftir:  i <= k <= j,
+	;;;         fyrir öll gildi p þ.a. i <= p < k gildir f(p) < x, 
+	;;;         fyrir öll gildi p þ.a. k <= p < j gildir f(p) >= x.
+	rec fun search2(f,i,j,x)
+	{
+		if( i==j ) { return i };
+		val m = i+(j-i)/2;
+		if( f(m)<x )
+		{
+			search2(f,m+1,j,x)
+		}
+		else
+		{
+			search2(f,i,m,x)
+		}
+	};
+
+	;;; Notkun: k = search3(f,i,j,x);
+	;;; Fyrir:  f er fall sem tekur heiltölu sem viðfang
+	;;;         og skilar gildi af einhverri gerð sem
+	;;;         <, >, <=, >=, !=, == virka fyrir.
+	;;;         i og j eru heiltölur, 0 <= i <= j.
+	;;;         Fallið f er í vaxandi röð á [i,j), þ.e.
+	;;;         fyrir öll p,q þ.a. i <= p < q < j gildir f(p) <= f(q).
+	;;;         x er gildi af sömu gerð og gildin sem f skilar.
+	;;; Eftir:  i <= k < j EÐA k < 0
+	;;;         ef k >= 0 þá gildir f(k) == x, 
+	;;;         ef k < 0 þá gildir i <= -k-1 <= j, og
+	;;;         fyrir öll gildi p þ.a. i <= p < -k-1 gildir f(p) < x.
+	;;;         fyrir öll gildi p þ.a. -k-1 <= p < j gildir f(p) > x.
+	rec fun search3(f,i,j,x)
+	{
+		var p = i, q = j;
+		while( p != q )
+		{
+			;;; i <= p <= q <= j,
+			;;; fyrir öll r þ.a. i <= r < p gildir f(r) < x,
+			;;; fyrir öll r þ.a. q <= r < j gildir f(r) > x
+			val m = p+(q-p)/2;
+			if( f(m) == x ) { return m };
+			if( f(m) < x ) { p = m+1 } else { q = m }
+		};
+		-p-1
+	};
+
+	;;; Notkun: k = search4(f,i,j,x);
+	;;; Fyrir:  f er fall sem tekur heiltölu sem viðfang
+	;;;         og skilar gildi af einhverri gerð sem
+	;;;         <, >, <=, >=, !=, == virka fyrir.
+	;;;         i og j eru heiltölur, 0 <= i <= j.
+	;;;         Fallið f er í vaxandi röð á [i,j), þ.e.
+	;;;         fyrir öll p,q þ.a. i <= p < q < j gildir f(p) <= f(q).
+	;;;         x er gildi af sömu gerð og gildin sem f skilar.
+	;;; Eftir:  i<=k<j EÐA k<0
+	;;;         ef k >= 0 þá gildir f(k) == x, 
+	;;;         ef k < 0 þá gildir i <= -k-1 <= j, og
+	;;;         fyrir öll gildi p þ.a. i <= p < -k-1 gildir f(p)<x.
+	;;;         fyrir öll gildi p þ.a. -k-1 <= p < j gildir f(p)>x.
+	rec fun search4(f,i,j,x)
+	{
+		if( i == j ) { return -i-1 };
+		val m = i+(j-i)/2;
+		if( f(m) == x ) { return m };
+		if( f(m) < x )
+		{
+			search4(f,m+1,j,x)
+		}
+		else
+		{
+			search4(f,i,m,x)
+		}
+	};
+
+	writeln(search1(fun(z){z*z},0,10000,1000000)); 
+	writeln(search2(fun(z){z*z},0,10000,1000000)); 
+	writeln(search3(fun(z){z*z},0,10000,1000000)); 
+	writeln(search1(fun(z){z*z},0,10000,1000001)); 
+	writeln(search2(fun(z){z*z},0,10000,1000001)); 
+	writeln(search3(fun(z){z*z},0,10000,1000001)); 
+	writeln(search4(fun(z){z*z},0,10000,1000001)); 
+	writeln(search4(fun(z){z*z},0,10000,1000000)); 
+	writeln(search1b(fun(z){-z*z},0,10000,-1000000)); 
+	writeln(search1b(fun(z){-z*z},0,10000,-1000001)); 
+};
+
+}}
+*
+BASIS
+;

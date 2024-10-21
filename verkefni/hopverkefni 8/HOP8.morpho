@@ -1,0 +1,82 @@
+"isort.mexe" = main in
+{{
+
+;;; Notkun: y = sort(x);
+;;; Fyrir:  x er listi talna.
+;;; Eftir:  y er listi sem inniheldur sömu gildi
+;;;         og x en í vaxandi röð.
+;;;
+;;; Use:    y = sort(x);
+;;; Pre:    x is a list of numbers.
+;;; Post:   y is a list that contains the same
+;;;         values as x in ascending order.
+main = fun (){
+	rec fun sort(x)
+	{
+		;;; Notkun: split(x,&y,&z);
+		;;; Fyrir:  x er listi.
+		;;; Eftir:  y og z innihalda lista þannig að
+		;;;         samskeyting þeirra inniheldur öll
+		;;;         gildi x, en e.t.v. í annarri röð.
+		;;;         Mismunur lengda y og z er í mesta
+		;;;         lagi einn.
+		;;;
+		;;; Use:    split(x,&y,&z);
+		;;; Pre:    x is a list.
+		;;; Post:   y and z contain lists such that
+		;;;         the concatenation of y and z
+		;;;         contains all the values from x,
+		;;;         but perhaps in a different order.
+		;;;         The difference in the lengths of
+		;;;         y and z is at most one.
+		rec fun split(x,&y,&z)
+		{
+			var w = x;
+	
+			while(w != [] && tail(w) != [] )
+			{
+				;;; w er listi af tölum og einnig y og z.
+				;;; samanlagt innihalda w, y og z öll gildin
+				;;; í x.
+				;;; Lengdin á y og z er sú sama.
+			
+				
+				y = head(w):y;
+				z = head(tail(w)):z;
+				w = tail(tail(w));
+			};
+		if(w != [] ) {y = head(w):y;}
+		};
+
+		;;; Notkun: z = merge(x,y);
+		;;; Fyrir:  x og y eru listar sem innihalda
+		;;;         tölur.
+		;;;         Báðir listarnir eru í vaxandi röð
+		;;; Eftir:  z inniheldur öll gildin úr x og y
+		;;;         í vaxandi röð.
+		;;;
+		;;; Use:    z = merge(x,y);
+		;;; Pre:    x and y are lists that contains
+		;;;         numbers.
+		;;;         Both the lists are in ascending order
+		;;; Post:   z contains all the values from x and
+		;;;         y in ascending order.
+		rec fun merge(x,y)
+		{
+			
+		};
+		var y = [];
+		var z = [];
+		split(x,&y,&z);
+		
+		
+	};
+	sort([1,2,3,4,6,8,9]);};
+
+;;; Skrifið einnig prófun fyrir sort fallið.
+;;; Also write a test for the sort function.
+}}
+
+*
+BASIS
+;

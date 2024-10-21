@@ -1,0 +1,92 @@
+rec obj mkAccount()
+{
+	var balance = 0;
+	msg balance() { balance };
+	msg deposit(amount) { balance=balance+amount };
+	msg withdraw(amount) { balance=balance-amount }; 
+};
+val acc0 = mkAccount();
+writeln(acc0.balance());
+acc0.deposit(100);
+acc0.withdraw(100);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+rec fun makeAccount()
+{
+	var balance = 0;
+	val vmt = makeHashMap();
+	vmt[\balance] = fun() { balance };
+	vmt[\deposit] = fun(amount) { balance = balance+amount };
+	vmt[\withdraw] = fun(amount) { balance = balance-amount };
+	vmt
+};
+val acc = makeAccount();
+writeln(acc[\balance]());
+acc[\deposit](100);
+acc[\withdraw](100);
+
+
+
+
+
+
+
+
+
+
+
+
+class A
+{
+	...
+	// Notkun: x.f(...);
+	// Fyrir:  F_A
+	// Eftir:  E_A
+	void f(...)
+	{
+		...
+	}
+}
+
+class B extends A
+{
+	...
+	// Notkun: x.f(...);
+	// Fyrir:  F_B
+	// Eftir:  E_B
+	void f(...)
+	{
+		...
+	}
+}
+
+A x = makeAorB();
+...
+// F
+x.f(...);
+// E
+
+Vitum:
+  F => F_A
+  E_A => E
+  
+Þurfum:
+  F => F_B
+  E_B => E
+  
+Lausn:
+  F_A => F_B --- Megum víkka forskilyrði, ekki þrengja
+  E_B => E_A --- Megum þrengja eftirskilyrði, ekki víkka
