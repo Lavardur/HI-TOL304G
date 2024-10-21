@@ -1,0 +1,185 @@
+;;; Notkun: y = sort(x);
+;;; Fyrir:  x er listi talna.
+;;; Eftir:  y er listi sem inniheldur sömu gildi
+;;;         og x en í vaxandi röð.
+;;;
+;;; Use:    y = sort(x);
+;;; Pre:    x is a list of numbers.
+;;; Post:   y is a list that contains the same
+;;;         values as x in ascending order.
+rec fun sort(x)
+{
+    ;;; Notkun: split(x,&y,&z);
+    ;;; Fyrir:  x er listi.
+    ;;; Eftir:  y og z innihalda lista þannig að
+    ;;;         samskeyting þeirra inniheldur öll
+    ;;;         gildi x, en e.t.v. í annarri röð.
+    ;;;         Mismunur lengda y og z er í mesta
+    ;;;         lagi einn.
+    ;;;
+    ;;; Use:    split(x,&y,&z);
+    ;;; Pre:    x is a list.
+    ;;; Post:   y and z contain lists such that
+    ;;;         the concatenation of y and z
+    ;;;         contains all the values from x,
+    ;;;         but perhaps in a different order.
+    ;;;         The difference in the lengths of
+    ;;;         y and z is at most one.
+    rec fun split(x,&y,&z)
+    {
+        {;;;
+        ;;; Recursive solution
+        if( !x )
+        {
+            y = z = [];
+        }
+        elsif( !tail(x) )
+        {
+            y = [head(x)];
+            z = [];
+        }
+        else
+        {
+            split(cddr(x),&y,&z);
+            y = car(x) : y;
+            z = cadr(x) : z;
+        }
+        ;;;}
+    
+        ;;; Looping solution
+        var w = x;
+        y = [];
+        z = [];
+        while( w )
+        {
+            ;;; w, y and z together contain
+            ;;; exactly all the values in x.
+            ;;; y and z are of equal length.
+            y = head(w) : y;
+            w = tail(w);
+            if( !w ) { return [] };
+            z = head(w) : z;
+            w = tail(w);
+        };
+    };
+
+    ;;; Notkun: z = merge(x,y);
+    ;;; Fyrir:  x og y eru listar sem innihalda
+    ;;;         tölur.
+    ;;;         Báðir listarnir eru í vaxandi röð
+    ;;; Eftir:  z inniheldur öll gildin úr x og y
+    ;;;         í vaxandi röð.
+    ;;;
+    ;;; Use:    z = merge(x,y);
+    ;;; Pre:    x and y are lists that contains
+    ;;;         numbers.
+    ;;;         Both the lists are in ascending order
+    ;;; Post:   z contains all the values from x and
+    ;;;         y in ascending order.
+    rec fun merge(x,y)
+    {
+        {;;; Recursive solution:
+        if( !x ) { return y };
+        if( !y ) { return x };
+        if( head(x) < head(y) )
+        {
+            return head(x) : merge(tail(x),y)
+        }
+        else
+        {
+            return head(y) : merge(x,tail(y))
+        }
+        ;;;}
+        
+        {;;;
+        ;;; Loop solution, using list surgery:
+        if( !x ) { return y };
+        if( !y ) { return x };
+        var first,last;
+        if( head(x) < head(y) )
+        {
+            first = last = [head(x)];
+            x = tail(x);
+        }
+        else
+        {
+            first = last = [head(y)];
+            y = tail(y);
+        };
+        while( x && y )
+        {
+            ;;; x, y and first are lists.
+            ;;; Together they contain all the
+            ;;; values originally in x and y.
+            ;;; All the values in first are <=
+            ;;; all the values in x and y and
+            ;;; are in ascending order.
+            ;;; The list first is non-empty
+            ;;; and last refers to the last
+            ;;; pair in the list.
+            if( head(x) < head(y) )
+            {
+                setTail(last,[head(x)]);
+                last = tail(last);
+                x = tail(x);
+            }
+            else
+            {
+                setTail(last,[head(y)]);
+                last = tail(last);
+                y = tail(y);
+            }
+        };
+        setTail(last,x || y);
+        return first;
+        ;;;}
+        
+        ;;; Loop solution by merging in reverse
+        var z = [];
+        while( x && y )
+        {
+            ;;; x, y and z together contain all the
+            ;;; contents of the original x and y.
+            ;;; x and y are in ascending order.
+            ;;; z is in descending order.
+            ;;; All the values in z are <= all the
+            ;;; values in x and y.
+            if( head(x) < head(y) )
+            {
+                z = head(x) : z;
+                x = tail(x);
+            }
+            else
+            {
+                z = head(y) : z;
+                y = tail(y);
+            }
+        };
+        x = x || y;
+        while( z )
+        {
+            ;;; x and z together contain all the
+            ;;; contents of the original x and y.
+            ;;; x is in ascending order.
+            ;;; z is in descending order.
+            ;;; All the values in z are <= all the
+            ;;; values in x.
+            x = head(z) : x;
+            z = tail(z);
+        };
+        x
+    };
+
+    if( !x || !tail(x) ) { return x };
+    var y,z;
+    split(x,&y,&z);
+    y = sort(y);
+    z = sort(z);
+    merge(y,z)
+};
+
+;;; Skrifið einnig prófun fyrir sort fallið.
+;;; Also write a test for the sort function.
+
+writeln(sort([9,1,8,2,7,3,6,5,5,5]));
+writeln(sort([9,9,9,8,8,8,7,6,5,4,3,2,1.0,1,1.0,1.0,1]));
