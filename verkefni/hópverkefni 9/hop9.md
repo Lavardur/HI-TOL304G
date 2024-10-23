@@ -1,3 +1,8 @@
+# TÖL304G Forritunarmál Verkefnablað 9
+
+![alt text](image.png)
+
+```
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;; Design document
@@ -253,3 +258,4 @@ comp =
 *
 BASIS
 ;
+```
