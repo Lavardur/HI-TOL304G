@@ -14,8 +14,22 @@ reversedListOfLists xs = foldl (\acc x -> [x] : acc) [] xs
 productOfSums :: [[Float]] -> Float 
 productOfSums = foldr (\x acc -> (foldr (+) 0 x) * acc) 1.0
 
+
+-- Write a function listAll in Haskell that takes arguments i, n and f 
+-- and returns the list [f(i),f(i+1),...,f(n)].
+
+-- Notkun: listAll i n f
+-- Fyrir:  tvær heiltölur i og n og fall f
+-- Gildi: listi af gildum f(i), f(i+1), ..., f(n)
+
+listAll :: Int -> Int -> (Int -> a) -> [a] 
+listAll i n f = map f [i..n]
+
+
+
+
 main :: IO ()
 main = do
     print (reversedListOfLists [1, 2, 3, 4] :: [[Int]])
-    print (productOfSums [[1.0, 2.0], [3.0], [4.0, 5.0]])  
-
+    print (productOfSums [[1.0, 2.0], [3.0], [4.0, 5.0]])
+    print (listAll 1 5 (\x -> x * x))
