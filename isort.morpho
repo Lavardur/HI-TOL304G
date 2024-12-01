@@ -1,0 +1,55 @@
+"isort.mexe" = main in
+{{
+main = fun (){
+	;;; Notkun: y = sort(x);
+	;;; Fyrir:  x er listi talna.
+	;;; Eftir:  y er listi sem inniheldur sömu gildi
+	;;;         og x en í vaxandi röð.
+	;;;
+	;;; Use:    y = sort(x);
+	;;; Pre:    x is a list of numbers.
+	;;; Post:   y is a list that contains the same
+	;;;         values as x in ascending order.
+	rec fun sort(x)
+	{
+		;;; Notkun: y = insert(x,v);
+		;;; Fyrir:  x er listi talna, v er tala.
+		;;;         x er í vaxandi röð.
+		;;; Eftir:  y er listi í vaxandi röð sem
+		;;;         inniheldur öll gildin í x auk 
+		;;;         gildisins v.
+		;;;
+		;;; Use:    y = insert(x,v);
+		;;; Pre:    x is a list of numbers, v is a
+		;;;         number.
+		;;; Post:   y is a list in ascending order
+		;;;         that contains all the values in
+		;;;         x and also the value v.
+		rec fun insert(x,v)
+		{	
+            if(x == []){
+				return v:[];
+			};
+			if(head(x)>v){
+				return v:x;
+			};return head(x):insert(tail(x),v);
+        
+		};
+
+		if (x == []){
+			return x;
+		};
+		return insert(sort(tail(x)),head(x));
+
+	};
+	var x = [6,5,4,2,7,8];
+	var y = sort(x);
+	writeln(y);
+
+};
+
+}}
+
+*
+BASIS
+;
